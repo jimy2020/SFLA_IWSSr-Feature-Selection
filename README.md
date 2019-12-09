@@ -1,6 +1,8 @@
 <h1> SFLA_IWSSr-Feature-Selection </h1>
 
  SFLA_IWSSr is hybrid method for feature selection. In this method, a hybrid method based on the IWSSr method and Shuffled Frog Leaping Algorithm (SFLA) is proposed to select effective features in a large-scale gene dataset. The proposed algorithm is implemented in two phases: filtering and wrapping. In the filter phase, the Relief method is used for weighting features. Then, in the wrapping phase, by using the SFLA and the IWSSr algorithms, the search for effective features in a feature-rich area is performed.
+ 
+ Pirgazi, J., Alimoradi, M., Esmaeili Abharian, T. et al. An Efficient hybrid filter-wrapper metaheuristic-based gene selection method for high dimensional datasets. Sci Rep 9, 18580 (2019) doi:10.1038/s41598-019-54987-1
 
  <h1> Requirement: </h1> 
 
