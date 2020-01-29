@@ -1,0 +1,44 @@
+function Empires = InitializeEmpires(InitialCountries,InitialCost)
+global ICA_Prams;
+AllImperialistsPosition = InitialCountries(1:ICA_Prams.nImp);
+AllImperialistsCost = InitialCost(1:ICA_Prams.nImp);
+
+AllColoniesPosition = InitialCountries(ICA_Prams.nImp+1:end);
+AllColoniesCost = InitialCost(ICA_Prams.nImp+1:end);
+
+if max(AllImperialistsCost)>0
+    AllImperialistsPower = 1.3 * max(AllImperialistsCost) - AllImperialistsCost;
+else
+    AllImperialistsPower = 0.7 * max(AllImperialistsCost) - AllImperialistsCost;
+end
+
+AllImperialistNumOfColonies = round(AllImperialistsPower/sum(AllImperialistsPower) *ICA_Prams.nCol);
+AllImperialistNumOfColonies(end) = ICA_Prams.nCol - sum(AllImperialistNumOfColonies(1:end-1));
+RandomIndex = randperm(ICA_Prams.nCol);
+
+% Empires(AlgorithmParams.NumOfInitialImperialists).ImperialistPosition = 0;
+
+for ii = 1:ICA_Prams.nImp
+    Empires(ii).ImperialistPosition(1,:) = AllImperialistsPosition(ii).SelVar;
+    Empires(ii).ImperialistCost(1,1) = AllImperialistsCost(ii,:);
+    if numel(RandomIndex)<AllImperialistNumOfColonies(ii)
+        R = RandomIndex(1:end);
+    else
+        R = RandomIndex(1:AllImperialistNumOfColonies(ii)); 
+    end
+    if numel(RandomIndex)>AllImperialistNumOfColonies(ii)&&AllImperialistNumOfColonies(ii)>=0
+        RandomIndex = RandomIndex(AllImperialistNumOfColonies(ii)+1:end);
+    end
+    Empires(ii).ColoniesPosition = {AllColoniesPosition(R).SelVar};
+    Empires(ii).ColoniesCost = AllColoniesCost(R);
+    Empires(ii).TotalCost = Empires(ii).ImperialistCost + AlgorithmParams.Zeta * mean(Empires(ii).ColoniesCost);
+end
+
+% for ii = 1:numel(Empires)
+%     if numel(Empires(ii).ColoniesPosition) == 0
+%         NewCountry = GenerateNewCountry(1,ProblemParams);   
+%         NewCountry = IWSS(NewCountry,ProblemParams);
+%         Empires(ii).ColoniesPosition = NewCountry.SelVar;
+%         Empires(ii).ColoniesCost = 1/NewCountry.AvgAcc;
+%     end
+% end

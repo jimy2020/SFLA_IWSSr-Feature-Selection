@@ -2,7 +2,7 @@ clear all
 clc;
 load_fspackage;
 load d.mat;
-load Colon;
+load CNS;
 labelCreator;
 %[train,test] = s_extraction(x_train,x_test);
 % Data.in: training samples (rows are data samples and colomns are features).
